@@ -2,21 +2,21 @@
 
 CREATE TABLE store (id INTEGER PRIMARY KEY, name TEXT, category TEXT, price INTEGER, sold INTEGER);
 
-INSERT INTO store VALUES (1, "makeup", "beauty", 30, 20);
-INSERT INTO store VALUES (2, "skincare", "beauty", 20, 30);
-INSERT INTO store VALUES (3, "sneakers", "shoes", 50, 10);
-INSERT INTO store VALUES (4, "sandals", "shoes", 25, 30);
-INSERT INTO store VALUES (5, "pajamas", "clothing", 20, 35);
-INSERT INTO store VALUES (6, "necklaces", "jewelry", 50, 0);
-INSERT INTO store VALUES (7, "bracelets", "jewlery", 20, 40);
-INSERT INTO store VALUES (8, "belts", "accessories", 50, 0);
-INSERT INTO store VALUES (9, "swimsuits", "women's clothing", 50, 0);
-INSERT INTO store VALUES (10, "cookies", "food", 40, 10);
-INSERT INTO store VALUES (11, "butter", "food", 30, 20);
-INSERT INTO store VALUES (12, "ice cream", "food", 40, 10);
-INSERT INTO store VALUES (13, "soup", "food", 20, 40);
-INSERT INTO store VALUES (14, "eggs", "food", 20, 30);
-INSERT INTO store VALUES (15, "cheese", "food", 24, 30);
+INSERT INTO store VALUES (1, "makeup", "beauty", 9.99, 20);
+INSERT INTO store VALUES (2, "skincare", "beauty", 13.99, 30);
+INSERT INTO store VALUES (3, "sneakers", "shoes", 39.99, 10);
+INSERT INTO store VALUES (4, "sandals", "shoes", 25.89, 30);
+INSERT INTO store VALUES (5, "pajamas", "clothing", 15.99, 35);
+INSERT INTO store VALUES (6, "necklaces", "jewelry", 79.80, 0);
+INSERT INTO store VALUES (7, "bracelets", "jewlery", 49.99, 40);
+INSERT INTO store VALUES (8, "belts", "accessories", 10.00, 0);
+INSERT INTO store VALUES (9, "swimsuits", "women's clothing", 25, 0);
+INSERT INTO store VALUES (10, "cookies", "food", 2.99, 10);
+INSERT INTO store VALUES (11, "butter", "food", 3.99, 20);
+INSERT INTO store VALUES (12, "ice cream", "food", 4.99, 10);
+INSERT INTO store VALUES (13, "soup", "food", 2.00, 40);
+INSERT INTO store VALUES (14, "eggs", "food", 5.99, 0);
+INSERT INTO store VALUES (15, "cheese", "food", 4.49, 30);
 
 --Display the database ordered by price. 
 SELECT * FROM store ORDER BY price;
