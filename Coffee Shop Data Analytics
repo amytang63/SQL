@@ -1,0 +1,68 @@
+In this project, I analyzed data relating to a coffee shop and its orders, customers, staff, and products.
+
+--1. The staff that sold the most drinks gets a bonus. Which staff sold the most drinks?
+SELECT first_name, last_name, SUM(quantity)
+FROM coffeeshop.staff
+JOIN coffeeshop."201904SalesReceipts"
+ON "201904SalesReceipts".staff_id = staff.staff_id
+GROUP BY staff.first_name
+ORDER BY SUM(quantity) desc
+LIMIT 1
+
+--2. The store that sold the most products wins the monthly prize. Which store sold the most products?
+SELECT SUM(quantity), SalesOutlets.sales_outlet_id, SalesOutlets.store_address, SalesOutlets.store_city
+FROM coffeeshop."201904SalesReceipts"
+JOIN coffeeshop.SalesOutlets
+ON "201904SalesReceipts".sales_outlet_id = SalesOutlets.sales_outlet_id
+GROUP BY SalesOutlets.store_address
+ORDER BY SUM(quantity) desc
+LIMIT 1
+
+--3. The CEO needs to know how many products are being sold on average at each store. What was the average number of products sold per store?
+with Quantity AS (
+SELECT SUM(quantity) AS TotalQuantity, sales_outlet_id
+FROM "201904SalesReceipts"
+GROUP BY sales_outlet_id
+)
+
+SELECT  SalesOutlets.sales_outlet_id, SalesOutlets.store_address, SalesOutlets.store_city, SalesOutlets.store_state_province, AVG(TotalQuantity) AS AverageQuantitySold
+from Quantity
+JOIN SalesOutlets
+ON Quantity.sales_outlet_id = SalesOutlets.sales_outlet_id
+GROUP BY SalesOutlets.sales_outlet_id
+
+--4. The CEO wants to know how each store is doing profit wise. How much profit did each store generate?
+SELECT SalesOutlets.sales_outlet_id, SalesOutlets.store_address, SalesOutlets.store_city, SalesOutlets.store_state_province, SUM(line_item_amount) AS Profit
+FROM "201904SalesReceipts"
+JOIN SalesOutlets
+ON "201904SalesReceipts".sales_outlet_id = SalesOutlets.sales_outlet_id
+GROUP BY SalesOutlets.sales_outlet_id
+
+--5. Which store has the most number of customers?
+SELECT home_store, store_address, store_city, store_state_province, count(customer_id) AS NumberOfCustomers
+FROM customers
+JOIN SalesOutlets
+ON customers.home_store = SalesOutlets.sales_outlet_id
+GROUP BY home_store
+ORDER BY NumberOfCustomers desc
+
+--6. The CEO wants to know the average amount for an order. What is the average price per order?
+SELECT sales_outlet_id, store_address, store_city, store_state_province, ROUND(AVG(line_item_amount), 2) as AvgPrice
+FROM "201904SalesReceipts"
+JOIN SalesOutlets
+ON "201904SalesReceipts".sales_outlet_id = SalesOutlets.sales_outlet_id
+GROUP BY "201904SalesReceipts".sales_outlet_id
+
+--7. The manager is noticing there are high percentages of waste. How many items are being sold compared to the number of products being wasted?
+SELECT sales_outlet_id, quantity_sold, waste, AVG("%waste") AS AvgPercentageWaste
+FROM PastryInventory
+GROUP BY sales_outlet_id
+
+--8. The manager needs a list of the number of products being waste. What's the order of products wasted from most to least?
+SELECT product_id, SUM(waste)
+FROM PastryInventory
+GROUP BY product_id
+ORDER BY SUM(waste) desc
+
+
+
